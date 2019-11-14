@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% load blog_tags %}
+{% load static %}
+{% block header %}
+    <div class="logo-box">
+        <img src="{% static 'img/pytonixs.svg' %}" class="logo" alt="Eagle Designs logo">
+    </div>
+{% endblock %}
+{% block content %}
+<section class="blog-page">
+    <div class="row">
+        <div class="col-2-of-3">
+    {% for post in posts %}
+    <img class="blog-page__img" src="{{ post.image_thumbnail.url }}" alt="{{post.title}}">
+        <h2 class="blog-page__list-heading">
+        <a href="{{ post.get_absolute_url }}">
+        {{ post.title }}
+        </a>
+        </h2>
+        <p class="blog-page__date">
+        Published {{ post.publish }} by {{ post.author }}
+        </p>
+        {{ post.body|truncatewords:30|safe }}
+  {% endfor %}
+  {% include "blog/pagination.html" with page=page_obj %}
+        </div>
+
+    <div class="col-1-of-4">
+  <p>This is my blog. I've written {% total_posts %} posts so far.</p>
+    
+    <h3>Latest posts</h3>
+  {% show_latest_posts 3 %}
+
+  <h3>Most commented posts</h3>
+{% get_most_commented_posts as most_commented_posts %}
+<ul>
+{% for post in most_commented_posts %}
+  <li>
+    <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
+  </li>
+{% endfor %}
+</ul>
+    </div>
+</section>
+{% endblock %}
