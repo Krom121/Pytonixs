@@ -6,10 +6,16 @@ from .models import NewClient
 from .forms import ContactForm
 
 
+
 def home(request):
     template = 'welcome/index.html'
+    contact_form = ContactForm()
+    if request.method == 'POST':
+        if form.is_valid():
+            contact_form.save()
     context = {
-        'title': 'welcome'
+        'title': 'welcome',
+        'contact_form': contact_form
     }
     return render(request, template, context)
 
