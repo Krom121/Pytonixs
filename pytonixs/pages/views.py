@@ -1,5 +1,9 @@
 from django.shortcuts import render
+from django.urls import reverse_lazy
 from .models import NewClient
+from django.views.generic import FormView
+from .models import NewClient
+from .forms import ContactForm
 
 
 def home(request):
@@ -10,22 +14,35 @@ def home(request):
     return render(request, template, context)
 
 
-
 def about(request):
-    return render(request, "about_us/about.html", {'title': 'Who we are'})
-
+    template = 'about_us/about.html'
+    context = {
+        'title': 'who_we_are'
+    }
+    return render(request, template, context)
 
 
 def service(request):
-    return render(request, "what_we_do/service.html",{'title': 'What we do'})
+    template = 'what_we_do/service.html'
+    context = {
+        'title': 'What we do'
+    }
+    return render(request, template, context)
 
 
 def project(request):
-    return render(request, "completed_projects/projects.html",{'title': 'Completed works'})
+    template = 'completed_projects/projects.html'
+    context = {
+        'title': 'completed projects'
+    }
+    return render(request, template, context)
 
 
+class ContactView(FormView):
+    form_class = ContactForm
+    template_name = 'contact_us/contact.html'
+    success_url = reverse_lazy('home')
 
-def contact(request):
-    return render(request, "contact_us/contact.html", {'title': 'Contact us'})
-
-
+    def form_valid(self, form):
+        self.send_mail(form.cleaned_data)
+        return super(ContactView, self).form_valid(form)
