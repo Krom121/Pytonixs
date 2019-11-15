@@ -1,10 +1,10 @@
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from .models import NewClient
-from django.views.generic import FormView
+from django.views.generic import FormView , View, ListView
 from .models import NewClient
 from .forms import ContactForm
-
+from blog.models import Post
 
 
 def home(request):
@@ -52,3 +52,6 @@ class ContactView(FormView):
     def form_valid(self, form):
         self.send_mail(form.cleaned_data)
         return super(ContactView, self).form_valid(form)
+
+def list(request):
+        return render(request, "blog/post/list.html", {'title': 'Our blogs'})
