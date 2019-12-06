@@ -1,47 +1,27 @@
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from .models import NewClient
-from django.views.generic import FormView , View, ListView
+from django.views.generic import FormView ,ListView, TemplateView
 from .models import NewClient
 from .forms import ContactForm
 from blog.models import Post
 
 
-def home(request):
-    template = 'welcome/index.html'
-    contact_form = ContactForm()
-    if request.method == 'POST':
-        if form.is_valid():
-            contact_form.save()
-    context = {
-        'title': 'welcome',
-        'contact_form': contact_form
-    }
-    return render(request, template, context)
+class HomeView(TemplateView):
+    template_name = 'welcome/index.html'
 
 
-def about(request):
-    template = 'about_us/about.html'
-    context = {
-        'title': 'who_we_are'
-    }
-    return render(request, template, context)
+
+class AboutView(TemplateView):
+    template_name = 'about_us/about.html'
 
 
-def service(request):
-    template = 'what_we_do/service.html'
-    context = {
-        'title': 'What we do'
-    }
-    return render(request, template, context)
+class ServiceView(TemplateView):
+    template_name = 'what_we_do/service.html'
 
 
-def project(request):
-    template = 'completed_projects/projects.html'
-    context = {
-        'title': 'completed projects'
-    }
-    return render(request, template, context)
+class ProjectView(TemplateView):
+    template_name = 'completed_projects/projects.html'
 
 
 class ContactView(FormView):
@@ -52,6 +32,3 @@ class ContactView(FormView):
     def form_valid(self, form):
         self.send_mail(form.cleaned_data)
         return super(ContactView, self).form_valid(form)
-
-def list(request):
-        return render(request, "blog/post/list.html", {'title': 'Our blogs'})
