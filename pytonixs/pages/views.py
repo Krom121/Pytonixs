@@ -7,9 +7,17 @@ from .forms import ContactForm
 from blog.models import Post
 
 
-class HomeView(TemplateView):
+class HomeView(FormView,TemplateView):
+    form_class = ContactForm
     template_name = 'welcome/index.html'
+    success_url = reverse_lazy('home')
 
+    def form_valid(self, form):
+        # This method is called when valid form data has been POSTed.
+        # It should return an HttpResponse.
+        form.save()
+        return super(HomeView, self).form_valid(form)
+        
 class AboutView(TemplateView):
     template_name = 'about_us/about.html'
 
