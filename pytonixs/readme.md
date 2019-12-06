@@ -13,3 +13,9 @@ Javascript is for the frontend functionality of website.
 This project has been SASSED(SCSS).
 
 All static files are located in the pages app.
+
+## Updates Coming soon
+
+Updating function based views to class based views.
+
+Auth app for clients which will include a dashboard where they can see payments,make payments, recent comments on blogs.
