@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.urls import reverse_lazy
-from .models import NewClient
+from django.core.mail import send_mail
 from django.views.generic import FormView ,ListView, TemplateView
 from .models import NewClient
 from .forms import ContactForm
@@ -9,8 +9,6 @@ from blog.models import Post
 
 class HomeView(TemplateView):
     template_name = 'welcome/index.html'
-
-
 
 class AboutView(TemplateView):
     template_name = 'about_us/about.html'
@@ -30,5 +28,7 @@ class ContactView(FormView):
     success_url = reverse_lazy('home')
 
     def form_valid(self, form):
-        self.send_mail(form.cleaned_data)
+        # This method is called when valid form data has been POSTed.
+        # It should return an HttpResponse.
+        form.save()
         return super(ContactView, self).form_valid(form)

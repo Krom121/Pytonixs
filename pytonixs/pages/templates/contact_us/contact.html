@@ -6,7 +6,8 @@
 <section class="contact-page">
         <div class="form-container">
             <h2 class="form-container__heading">Get in Touch today</h2>
-            <form action="{% url 'home' %}" method="POST">{% csrf_token %}
+            <form action="" method="POST">
+                {% csrf_token %}
                 {{ form }}
                 {{ field }}
                 {{ form.errors }}
