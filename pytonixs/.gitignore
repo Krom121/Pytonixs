@@ -2,5 +2,4 @@ Pipfile
 Pipfile.lock
 .vscode
 db.sqlite3
-local.py
 migrations
